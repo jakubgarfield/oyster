@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"os/signal"
+	"strconv"
 	"time"
 
 	"github.com/atotto/clipboard"
@@ -203,6 +204,29 @@ EXAMPLE:
 			Usage:     "Remove a password",
 			Action: func(c *cli.Context) {
 				if err := repo.Remove(c.Args().First()); err != nil {
+					panic(err)
+				}
+			},
+			BashComplete: bashCompleteKeys(repo),
+		},
+		{
+			Name:  "generate",
+			Usage: "Generates random password and copies to clipboard",
+			Action: func(c *cli.Context) {
+				var password string
+				s := c.Args().First()
+				if s != "" {
+					length, err := strconv.Atoi(s)
+					if err != nil {
+						panic(err)
+					}
+					password = repository.GeneratePassword(length)
+				} else {
+					password = repository.GeneratePassword(20)
+				}
+				fmt.Println(password)
+				err := copyThenClear(password, 45*time.Second)
+				if err != nil {
 					panic(err)
 				}
 			},
