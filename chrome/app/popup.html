@@ -14,7 +14,7 @@
       <div ng-hide="message">
         <div ng-hide="selectedForm" class="small-12 columns">
           <h3>Choose:</h3>
-          <button type="button" ng-repeat="form in forms" ng-click="select(form)" class="button expand">{{form.key}}</button>
+          <button type="button" ng-repeat="form in forms" ng-click="select(form)" autofocus class="button expand">{{form.key}}</button>
         </div>
         <div ng-show="selectedForm" class="small-12 columns">
           <form ng-submit="unlock()">
